@@ -369,8 +369,9 @@ function fetchMessage()
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("chat-content").innerHTML =
-      this.responseText;
+      let chatDiv=document.getElementById("chat-content");
+      chatDiv.innerHTML = this.responseText;
+      chatDiv.scrollTop = chatDiv.scrollHeight;
     }
   };
   xhttp.open("POST", "/fetch", true);
