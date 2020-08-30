@@ -403,6 +403,7 @@ function loadDoc() {
   xhttp.open("POST", "/room", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("message="+message);
+  document.getElementById("message").value=null;
 }
 </script>
 </body>
