@@ -1,0 +1,8 @@
+{% for msg in msg_list %}
+<div class="container">
+  {{msg.ip}}
+says
+<p>{{msg.message}}</p>
+<span class="time-right">{{msg.time}}</span>
+</div>
+{% endfor %}
