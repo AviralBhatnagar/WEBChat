@@ -1,8 +1,19 @@
+
+
 {% for msg in msg_list %}
-<div class="container">
-  {{msg.ip}}
-says
-<p>{{msg.message}}</p>
-<span class="time-right">{{msg.time}}</span>
+{% if msg.user==user %}
+<div class="media media-chat media-chat-reverse">
+    <div class="media-body">
+        <p>{{msg.message}}</p>
+        <p class="meta">{{msg.time}}</p>
+    </div>
 </div>
+{% else %}
+<div class="media media-chat"> {{msg.user}}<br>{{msg.ip}}
+    <div class="media-body">
+        <p>{{msg.message}}</p>
+        <p class="meta">{{msg.time}}</p>
+    </div>
+</div>
+{% endif %}
 {% endfor %}

@@ -122,7 +122,7 @@ def fetch():
     if request.method == 'POST':
         room_name = request.form.get('room_name')
         msg_list = Messages.query.filter_by(room_name=room_name).all()
-        return render_template('single_message.html',msg_list=msg_list)
+        return render_template('single_message.html',msg_list=msg_list,user=session['user'])
 
 #Logout Route.
 @app.route('/logout')
