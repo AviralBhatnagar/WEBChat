@@ -338,18 +338,18 @@ textarea {
                     <div class="card-header">
                         <h4 class="card-title"><strong>Chat</strong></h4> <h5 class="btn btn-xs btn-secondary">Room Name: {{room_name}}</h5>
                     </div>
-                    <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
-
-                        <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+                    <div class="ps-container ps-theme-default ps-active-y" style="height:400px !important;">
+                      <div id="chat-content" style="overflow-y: scroll !important; height:400px !important;"></div>
+                      <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
                             <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
                         </div>
                         <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
                             <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
                         </div>
                     </div>
-                    <div class="publisher bt-1 border-light"> <img class="avatar avatar-xs" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="..."> <input class="publisher-input" type="text" placeholder="Write something" id="message"> <span class="publisher-btn file-group"> <!--<i class="fa fa-paperclip file-browser"><input type="file" name="file" id="file"></i> </span>
+                    <div class="publisher bt-1 border-light"><img class="avatar avatar-xs" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="..."> <input class="publisher-input" type="text" placeholder="Write something" id="message"> <span class="publisher-btn file-group"> <!--<i class="fa fa-paperclip file-browser"><input type="file" name="file" id="file"></i> </span>
                       <a class="publisher-btn" href="#" data-abc="true"><i class="fa fa-smile"></i></a>-->
-                      <Button class="publisher-btn text-info" onclick="loadDoc()" data-abc="true" id="submitbtn"><i class="fa fa-paper-plane"></i></Button> </div>
+                      <Button class="publisher-btn text-info" onclick="loadDoc()" data-abc="true" id="submitbtn"><i class="fa fa-paper-plane" title="Send"></i></Button> </div>
                 </div>
             </div>
         </div>
@@ -364,19 +364,36 @@ textarea {
 
 <script>
 setInterval(fetchMessage,1500);
+var scroll = false;
+var chatDiv=document.getElementById("chat-content");
+let audio = new Audio("{{url_for('static',filename='sound/notification.mp3')}}");
 function fetchMessage()
 {
+  let length=chatDiv.getElementsByTagName('div').length;
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      let chatDiv=document.getElementById("chat-content");
-      chatDiv.innerHTML = this.responseText;
-      chatDiv.scrollTop = chatDiv.scrollHeight;
+    if (this.readyState == 4 && this.status == 200 && this.responseText!="") {
+      //chatDiv.innerHTML = this.responseText;
+      //chatDiv.scrollTop = chatDiv.scrollHeight;
+     if(chatDiv.scrollTop === (chatDiv.scrollHeight-chatDiv.clientHeight)){
+        chatDiv.innerHTML = this.responseText;
+        chatDiv.scrollTop = chatDiv.scrollHeight;
+      }
+      else{
+         chatDiv.innerHTML = this.responseText;
+        navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+
+           if (navigator.vibrate) {
+             navigator.vibrate(500);
+           }
+             audio.play();
+
+      }
     }
   };
   xhttp.open("POST", "/fetch", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send("room_name={{room_name}}");
+  xhttp.send("room_name={{room_name}}&count_msg="+(length/2));
 }
 
 </script>
