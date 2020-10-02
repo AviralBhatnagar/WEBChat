@@ -14,10 +14,10 @@ Project was created using :-
 To Run this project, do the following :-
 * Clone WEBChat repository locally.
 * Open Powershell(terminal) in folder WEBChat/WEBChat.
-* Execute the following command (Only for window Powershell users) :-
+* Execute the following command :-
 ```
-$ .\\env\Scripts\activate
-$ main.py
+$ python install -r requirements.py
+$ python main.py
 ```
 * Open browser and Go to :
 ```
