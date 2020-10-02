@@ -105,10 +105,10 @@ def room():
         #Getting ip of the user who sends message.
         ip = request.remote_addr
         #Create entry in database.
-        newMessage = Messages(room_name=session['room_name'],user=session['user'],message=message,ip=ip,time=datetime.now())
+        newMessage = Messages(room_name=session['room_name'],user=session['user'],message=message,ip=ip,time=datetime.now().strftime("%c"))
         db.session.add(newMessage)
         db.session.commit()
-
+        return 'True'
     #Handling GET request.
     room_name = request.args.get('room')
     if 'user' in session:
@@ -124,7 +124,7 @@ def fetch():
         room_name = request.form.get('room_name')
         count_msg_js = int(request.form.get('count_msg'))
         count_msg_db = Messages.query.filter_by(room_name=room_name).count()
-        
+
         if(count_msg_db > count_msg_js):
             msg_list= Messages.query.filter_by(room_name=room_name).all()
             return render_template('single_message.html',msg_list=msg_list,user=session['user'])
@@ -141,4 +141,4 @@ def logout():
 
 #Entry Point.
 if __name__=="__main__":
-    app.run()
+    app.run(debug=True)

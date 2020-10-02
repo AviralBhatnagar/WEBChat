@@ -37,13 +37,13 @@
 
   <body class="text-center">
     <form class="form-signin" action="/signin/{{room_name}}" method="post">
-  <img class="mb-4" src="{{url_for('static',filename='/img/account.png')}}" alt="" width="72" height="72">
-  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+  <img class="mb-4" src="{{url_for('static',filename='/img/account_new.png')}}" alt="" width="200" height="200">
+  <h1 class="h3 mb-3 font-weight-normal">Enter Your details</h1>
   <label for="user" class="sr-only">Enter Name</label>
   <input type="text" name="user" id="user" class="form-control" placeholder="Enter Name" required autofocus>
-  <input typr="hidden" id="room_name" name="room_name" value="{{room_name}}">
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-  <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+  <input type="hidden" class="form-control" id="room_name" name="room_name" value="{{room_name}}">
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Enter Room</button>
+  <p class="mt-5 mb-3 text-muted">WEBchat &copy; 2020-2021</p>
 </form>
 </body>
 </html>
